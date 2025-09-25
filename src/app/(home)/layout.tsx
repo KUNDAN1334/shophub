@@ -1,14 +1,13 @@
+import { Navbar } from "./navbar";
+
 interface Props{
     children: React.ReactNode
 }
 
 const layout= ({children } : Props) =>{
     return (
-        <div >
-            <nav>
-                This is the home layout
-                
-            </nav>
+        <div className="flex flex-col min-h-screen">
+            <Navbar/>
           {children}
         </div>
     );
