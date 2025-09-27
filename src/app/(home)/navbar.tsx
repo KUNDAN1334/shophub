@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button";
+import {NavbarSidebar} from "./navbar-sidebar";
+import { useState } from "react";
 
 const poppins=Poppins({
     subsets:["latin"],
@@ -48,7 +50,7 @@ const NavbarItems=[
 
 export const Navbar=()=>{
   const pathname=usePathname();
-
+  const [isSidebarOpen,setisSidebarOpen]=useState(false);
   return(
     <nav className="h-20 flex border-b-neutral-950 justify-between font-medium bg-white">
       <Link href="/" className="pl-6 flex items-center">
@@ -57,18 +59,50 @@ export const Navbar=()=>{
         </span>
       </Link>
 
+      <NavbarSidebar
+      items={NavbarItems}
+    open={isSidebarOpen}
+    onOpenChange={setisSidebarOpen}
+
+      />
+
  <div className="items-center gap-4 hidden lg:flex">
    {
     NavbarItems.map((item)=>(
         <NavbarItem 
         key={item.href} 
-        href={item.href}>
+        href={item.href}
+        isActive={pathname==item.href}
+        >
 
  {item.children}
         </NavbarItem>
     ))
    }
  </div>
+
+<div className="hidden lg:flex pl-6 flex items-center">
+    <Button 
+    asChild
+    className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-white hover:bg-pink-400 transition-colors text-lg" variant="secondary">
+
+        <Link href="/sign-in">
+        Log In
+        </Link>
+        
+    </Button>
+    <Button
+    asChild
+    className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-black text-white hover:bg-pink-400 hover:text-black transition-colors text-lg" variant="secondary">
+
+        <Link href="/sign-up">
+        Start selling
+        </Link>
+
+    </Button>
+</div>
+    
+   
 
     </nav>
   )  
